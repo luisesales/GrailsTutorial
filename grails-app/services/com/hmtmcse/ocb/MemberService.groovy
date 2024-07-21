@@ -1,5 +1,7 @@
 package com.hmtmcse.ocb
 
+import grails.web.servlet.mvc.GrailsParameterMap
+
 class MemberService {
 
     def save(GrailsParameterMap params) {
