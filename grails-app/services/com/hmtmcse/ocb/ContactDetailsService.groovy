@@ -66,21 +66,28 @@ class ContactDetailsService {
         return map
     }
 
-    private def saveOrUpdate(def map){
+
+    private def saveOrUpdate(def map) {
         ContactDetails contactDetails
         if (map && map.id) {
             contactDetails = getById(map.id) ?: new ContactDetails()
             contactDetails.properties = map
         } else {
-            contactDetails = new ContactDetails(map)
+             if( map?.mobile || map?.phone || map?.email ||
+                map?.website || map?.address || map?.type){
+                contactDetails = new ContactDetails(map)
+             }
         }
         contactDetails.save(flush: true)
     }
 
 
+
     def createOrUpdateDetails(Contact contact, def params) {
         if (params.type instanceof String) {
-            saveOrUpdate(getContactDetailsParamsParse(contact, params))
+            if(params.mobile != "" || params.phone != "" || params.email != "" || params.website != "" || params.address != "" || params.type != "") {
+                saveOrUpdate(getContactDetailsParamsParse(contact, params))
+            }
         } else if (params.type && params.type.getClass().isArray()) {
             Integer index = 0
             params.type.each {

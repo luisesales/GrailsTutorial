@@ -74,6 +74,12 @@ class ContactService {
 
 
     def uploadImage(Contact contact, HttpServletRequest request){
+        try {
+            if(contact.image)
+                FileUtil.deleteContactImage(contact.id, contact.image)
+        } catch (Exception e) {
+            println(e.getMessage())
+        }
         if (request.getFile("contactImage") && !request.getFile("contactImage").filename.equals("")){
             String image = FileUtil.uploadContactImage(contact.id, request.getFile("contactImage"))
             if (!image.equals("")){
