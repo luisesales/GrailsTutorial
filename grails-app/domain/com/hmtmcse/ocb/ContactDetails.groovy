@@ -26,4 +26,16 @@ class ContactDetails {
     static mapping = {
         version(false)
     }
+
+    def beforeUpdate(){
+        if(!this?.mobile && !this?.phone && !this?.email && !this?.website && !this?.address){
+            return false
+        }
+    }
+
+    def beforeInsert(){
+        if(!this?.mobile && !this?.phone && !this?.email && !this?.website && !this?.address){
+            return false
+        }
+    }
 }
